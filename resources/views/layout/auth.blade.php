@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('asset/css/adminlte.min.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+
 
 </head>
 
@@ -29,6 +31,9 @@
     <script src="{{ asset('asset/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('asset/js/adminlte.min.js') }}"></script>
+    
+    @include('sweetalert::alert')
+
 </body>
 
 </html>

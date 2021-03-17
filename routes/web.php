@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // })->middleware(['auth']);
 
-Route::group(['middleware' => 'auth'],function(){
+Route::group(['middleware' => ['auth','verified']],function(){
     Route::get('/',[App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
-    Route::resource('/admin', App\Http\Controllers\AdminController::class);
+    Route::resource('/member', App\Http\Controllers\AdminController::class);
+    Route::resource('/theme', App\Http\Controllers\ThemeController::class);
+    Route::Get('/admin/active/{db}/{id}',function($db,$id){
+        return active($db,$id);
+    })->name('active');
+
 
 });
 
@@ -41,7 +46,6 @@ admin
 user
 1. 
 2. CR INVOICE
-3. RU Theme
 4. CRUD Contact
 5. CRU User
 

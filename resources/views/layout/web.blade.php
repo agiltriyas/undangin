@@ -7,7 +7,6 @@
 
   @include('includes.style')
   @stack('after-style')
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -53,6 +52,7 @@
 <!-- ./wrapper -->
 
 @include('includes.script')
+@include('sweetalert::alert')
 @stack('after-script')
 </body>
 </html>

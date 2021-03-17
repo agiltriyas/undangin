@@ -1,7 +1,7 @@
 @extends('layout.web',['title' => 'Members'])
 
 @section('breadcrumb')
-<li class="breadcrumb-item"><a href="">members</a></li>
+<li class="breadcrumb-item"><a >Members</a></li>
 @endsection
 
 @section('content-web')
@@ -33,7 +33,7 @@
 
                                 <div class="card-tools">
                                     <ul class="pagination pagination-sm float-right">
-                                        <button class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i></button>
+                                        <a href="{{ route('member.create') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i></a>
                                     </ul>
                                 </div>
                             </div>
@@ -43,11 +43,10 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Nama</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Role</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,25 +55,27 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $adm->name }}</td>
                                             <td>{{ $adm->email }}</td>
-                                            <td>Active</td>
-                                            <td>Admin Transaction</td>
-                                            <td>Suspend</td>
+                                            @if($adm->is_active==1)
+                                            <td><a href="{{ route('active',['user',$adm->id]) }}" class="btn badge bg-info">Active</a></td>
+                                            @else
+                                            <td><a href="{{ route('active',['user',$adm->id]) }}" class="btn badge bg-warning">inActive</a></td>
+                                            @endif
+                                            <td>Admin</td>
                                         </tr>
                                         @empty
-                                            
+                                            <tr>
+                                                <td colspan="6" class="text-center">Data not found</td>
+                                            </tr>
                                         @endforelse
                                         
                                     </tbody>
                                 </table>
                             </div>
+
                             <!-- /.card-body -->
                             <div class="card-footer clearfix">
                                 <ul class="pagination pagination-sm m-0 float-right">
-                                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                                  {{ $admin->links('pagination::simple-bootstrap-4') }}
                                 </ul>
                               </div>
                         </div>
@@ -93,35 +94,39 @@
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th>Date Created</th>
-                                            <th>Nama</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Transaction</th>
-                                            <th>Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse ($users as $user)
                                         <tr>
-                                            <td>1</td>
-                                            <td>28/03/1991</td>
-                                            <td>Supri</td>
-                                            <td>supri@gmail.com</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $user->created_at }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            @if($user->email_verified_at)
                                             <td>Active</td>
-                                            <td>V</td>
-                                            <td>Suspend</td>
+                                            @else
+                                            <td>InActive</td>
+                                            @endif
+                                            <td><span class="badge bg-success">Done</span></td>
                                         </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">Data not found</td>
+                                        </tr>                                             
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer clearfix">
                                 <ul class="pagination pagination-sm m-0 float-right">
-                                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                                  {{ $users->links('pagination::simple-bootstrap-4') }}
                                 </ul>
                               </div>
                         </div>
@@ -132,3 +137,4 @@
         </div>
     </div>
     @endsection
+
